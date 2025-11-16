@@ -9,11 +9,11 @@
 
 <div>
 	<label>User: </label>
-	@if (Model.Patient != null)
+	@if (User.IsInRole("Patient"))
 	{
 		<input class="form-control" value="@Model?.Patient?.Name" readonly />
 	}
-	else if (Model.Staff != null)
+	else if (User.IsInRole("Staff"))
 	{
 		<input class="form-control" value="@Model.Staff?.Name" readonly />
 	}
@@ -21,25 +21,25 @@
 
 <form method="post" asp-controller="Appointments" asp-action="AddAppointment">
 	<div class="form-group">
-		<label asp-for="Appointment.Reason"></label>
-		<input asp-for="Appointment.Reason" class="form-control" />
-		<span asp-validation-for="Appointment.Reason" class="text-danger"></span>
+		<label asp-for="Reason"></label>
+		<input asp-for="Reason" class="form-control" />
+		<span asp-validation-for="Reason" class="text-danger"></span>
 	</div>
 
 	<div class="form-group">
-		<label asp-for="Appointment.DateOfAppointment"></label>
-		<input asp-for="Appointment.DateOfAppointment" type="datetime-local" class="form-control" />
-		<span asp-validation-for="Appointment.DateOfAppointment" class="text-danger"></span>
+		<label asp-for="DateOfAppointment"></label>
+		<input asp-for="DateOfAppointment" type="datetime-local" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+		<span asp-validation-for="DateOfAppointment" class="text-danger"></span>
 	</div>
 
-	@if (Model!.Patient != null)
+	@if (User.IsInRole("Patient"))
 	{
 		<div class="form-group">
 			<label asp-for="Appointment.StaffId"></label>
 			<select asp-for="Appointment.StaffId" class="form-select" asp-items="Model.SelectStaff"></select>
 		</div>
 	}
-	else if (Model.Staff != null)
+	else if (User.IsInRole("Staff"))
 	{
 		<div class="form-group">
 			<label asp-for="Appointment.PatientId"></label>

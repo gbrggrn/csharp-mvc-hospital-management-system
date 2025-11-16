@@ -180,6 +180,16 @@ namespace Csharp3_A3.Controllers
 			else if (currentUser.StaffId != null)
 				model.Appointment.StaffId = (int)currentUser.StaffId;
 			
+			if (!ModelState.IsValid)
+			{
+				model.Patient = _patientService.GetByIdAsync(model.Appointment.PatientId).Result;
+				model.Staff = _staffService.GetByIdAsync(model.Appointment.StaffId).Result;
+				model.SelectPatients = new SelectList(await _patientService.GetAllAsync(), "Id", "Name");
+				model.SelectStaff = new SelectList(await _staffService.GetAllAsync(), "Id", "Name");
+				model.StatusList = new SelectList(Enum.GetValues(typeof(AppointmentStatus)));
+				return View(model);
+			}
+			
 			var staffAppointments = await _appointmentService.GetAppointmentsByStaffIdAsync(model.Appointment.StaffId);
 			bool dateConflict = staffAppointments.Any(a => a.DateOfAppointment == model.Appointment.DateOfAppointment);
 
