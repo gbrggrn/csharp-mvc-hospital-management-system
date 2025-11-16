@@ -95,14 +95,14 @@ namespace Csharp3_A3.Controllers
 
 			await _newsService.UpdateAsync(itemToUpdate);
 
-			return RedirectToAction("Index", "News");
+			return RedirectToAction("NewsManagement", "News");
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> AddNews(NewsItem newsItem)
 		{
 			await _newsService.AddAsync(newsItem);
-			return RedirectToAction("Index", "News");
+			return RedirectToAction("NewsManagement", "News");
 		}
 	}
 }
