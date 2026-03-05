@@ -1,5 +1,8 @@
 # Hospital Management System
 
+![Hospital Management System index](/readme-img/hospital-mgmt-1.png)
+![Hospital Management System login](/readme-img/hospital-mgmt-2.png)
+
 ## Context
 
 * **Origin** Developed as part of the third C# course at Malmö University.
